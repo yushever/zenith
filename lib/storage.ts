@@ -22,9 +22,7 @@ export const getWatchHistoryFromStorage = (): WatchHistoryMap => {
   }
 };
 
-export const saveWatchHistoryToStorage = (
-  history: WatchHistoryMap,
-): void => {
+export const saveWatchHistoryToStorage = (history: WatchHistoryMap): void => {
   if (typeof window === 'undefined') {
     return;
   }

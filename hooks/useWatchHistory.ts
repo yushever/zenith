@@ -11,29 +11,26 @@ import type { ContentItem } from '@/types/content';
 type WatchHistoryMap = Record<number, WatchHistoryItem>;
 
 export const useWatchHistory = (contentItems: ContentItem[]) => {
-  const [historyMap, setHistoryMap] = useState<WatchHistoryMap>({});
-
-  useEffect(() => {
-    const storedHistory = getWatchHistoryFromStorage();
-    setHistoryMap(storedHistory);
-  }, []);
+  const [historyMap, setHistoryMap] = useState<WatchHistoryMap>(() =>
+    getWatchHistoryFromStorage(),
+  );
 
   useEffect(() => {
     saveWatchHistoryToStorage(historyMap);
   }, [historyMap]);
 
-const updateProgress = (contentId: number, progress: number) => {
-  const normalizedProgress = Math.max(0, Math.min(100, Math.round(progress)));
+  const updateProgress = (contentId: number, progress: number) => {
+    const normalizedProgress = Math.max(0, Math.min(100, Math.round(progress)));
 
-  setHistoryMap((prev) => ({
-    ...prev,
-    [contentId]: {
-      contentId,
-      progress: normalizedProgress,
-      updatedAt: new Date().toISOString(),
-    },
-  }));
-};
+    setHistoryMap((prev) => ({
+      ...prev,
+      [contentId]: {
+        contentId,
+        progress: normalizedProgress,
+        updatedAt: new Date().toISOString(),
+      },
+    }));
+  };
 
   const markAsWatched = (contentId: number) => {
     updateProgress(contentId, 100);
@@ -46,11 +43,11 @@ const updateProgress = (contentId: number, progress: number) => {
           new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
       )
       .map((entry) => {
-        const content = contentItems.find((item) => item.id === entry.contentId);
+        const content = contentItems.find(
+          (item) => item.id === entry.contentId,
+        );
 
-        if (!content) {
-          return null;
-        }
+        if (!content) return null;
 
         return {
           ...content,

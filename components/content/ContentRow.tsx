@@ -10,23 +10,23 @@ type ContentRowProps = {
 export const ContentRow = ({ title, items, onSelect }: ContentRowProps) => {
   return (
     <section aria-labelledby="trending-heading" className="space-y-4">
-    <h2 id="trending-heading" className="text-2xl font-semibold">
+      <h2 id="trending-heading" className="text-2xl font-semibold">
         {title}
-    </h2>
+      </h2>
 
-    <div className="relative">
+      <div className="relative">
         <div
-        className="hide-scrollbar flex gap-4 overflow-x-auto pb-4"
-        role="list"
-        aria-label={`${title} content list`}
+          className="hide-scrollbar flex gap-4 overflow-x-auto pb-4"
+          role="list"
+          aria-label={`${title} content list`}
         >
-        {items.map((item) => (
+          {items.map((item) => (
             <div key={item.id} className="shrink-0">
-            <ContentCard item={item} onClick={() => onSelect(item)} />
+              <ContentCard item={item} onClick={() => onSelect(item)} />
             </div>
-        ))}
+          ))}
         </div>
-    </div>
+      </div>
     </section>
   );
 };

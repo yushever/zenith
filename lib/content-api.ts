@@ -1,7 +1,9 @@
 import { mockContent } from '@/data/mock-content';
 import type { ApiResponse } from '@/types/content';
 
-export const fetchContent = async (signal?: AbortSignal): Promise<ApiResponse> => {
+export const fetchContent = async (
+  signal?: AbortSignal,
+): Promise<ApiResponse> => {
   await new Promise<void>((resolve, reject) => {
     const timeout = setTimeout(() => resolve(), 1000);
 

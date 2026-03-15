@@ -6,11 +6,22 @@ export const Header = () => {
           StreamBox
         </div>
 
-        <nav aria-label="Main navigation" className="hidden gap-6 text-sm text-white/80 md:flex">
-          <a href="#" className="transition hover:text-white">Home</a>
-          <a href="#" className="transition hover:text-white">Movies</a>
-          <a href="#" className="transition hover:text-white">Series</a>
-          <a href="#" className="transition hover:text-white">My List</a>
+        <nav
+          aria-label="Main navigation"
+          className="hidden gap-6 text-sm text-white/80 md:flex"
+        >
+          <a href="#" className="transition hover:text-white">
+            Home
+          </a>
+          <a href="#" className="transition hover:text-white">
+            Movies
+          </a>
+          <a href="#" className="transition hover:text-white">
+            Series
+          </a>
+          <a href="#" className="transition hover:text-white">
+            My List
+          </a>
         </nav>
 
         <div className="flex items-center gap-3">

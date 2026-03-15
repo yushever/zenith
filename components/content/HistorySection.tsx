@@ -10,25 +10,19 @@ type HistorySectionProps = {
   onSelect: (item: ContentItem) => void;
 };
 
-export const HistorySection = ({
-  items,
-  onSelect,
-}: HistorySectionProps) => {
+export const HistorySection = ({ items, onSelect }: HistorySectionProps) => {
   return (
     <section
       aria-labelledby="watch-history-heading"
       className="mt-10 space-y-4"
     >
-      <h2
-        id="watch-history-heading"
-        className="text-2xl font-semibold"
-      >
+      <h2 id="watch-history-heading" className="text-2xl font-semibold">
         Watch History
       </h2>
 
       {items.length === 0 && (
         <p className="text-sm text-white/60">
-          You haven't watched anything yet.
+          You haven&apos;t watched anything yet.
         </p>
       )}
 
