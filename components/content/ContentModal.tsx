@@ -86,6 +86,21 @@ export const ContentModal = ({
             >
               {item.description}
             </p>
+            <div className="rounded-2xl bg-black/30 p-4">
+            <p className="mb-3 text-sm font-medium text-white/90">Trailer</p>
+
+            <div className="overflow-hidden rounded-xl aspect-video bg-black">
+                <video
+                  controls
+                  className="h-full w-full object-cover"
+                  aria-label={`${item.title} trailer`}
+                  poster={item.thumbnail}
+                >
+                <source src={item.video_url} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            </div>
           </div>
         </div>
       </div>
