@@ -5,6 +5,7 @@ import { useContent } from '@/hooks/useContent';
 import { Header } from '@/components/header/Header';
 import { ContentRow } from '@/components/content/ContentRow';
 import { ContentSkeleton } from '@/components/content/ContentSkeleton';
+import { ContentModal } from '@/components/content/ContentModal';
 import type { ContentItem } from '@/types/content';
 
 export const StreamingHome = () => {
@@ -35,6 +36,13 @@ export const StreamingHome = () => {
           />
         )}
       </div>
+
+        <ContentModal
+            item={selectedItem}
+            isOpen={Boolean(selectedItem)}
+            onClose={() => setSelectedItem(null)}
+        />
+
     </main>
   );
 };
