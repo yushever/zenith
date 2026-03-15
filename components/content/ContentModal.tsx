@@ -7,12 +7,16 @@ type ContentModalProps = {
   item: ContentItem | null;
   isOpen: boolean;
   onClose: () => void;
+  onStartWatching?: (contentId: number, progress: number) => void;
+  onFinishWatching?: (contentId: number) => void;
 };
 
 export const ContentModal = ({
   item,
   isOpen,
   onClose,
+  onStartWatching,
+  onFinishWatching,
 }: ContentModalProps) => {
   useEffect(() => {
     if (!isOpen) return;
@@ -31,6 +35,16 @@ export const ContentModal = ({
   }, [isOpen, onClose]);
 
   if (!isOpen || !item) return null;
+
+  const handleTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>) => {
+    const video = event.currentTarget;
+
+    if (!video.duration || Number.isNaN(video.duration)) return;
+
+    const progress = Math.round((video.currentTime / video.duration) * 100);
+
+    onStartWatching?.(item.id, progress);
+  };
 
   return (
     <div
@@ -86,20 +100,23 @@ export const ContentModal = ({
             >
               {item.description}
             </p>
-            <div className="rounded-2xl bg-black/30 p-4">
-            <p className="mb-3 text-sm font-medium text-white/90">Trailer</p>
 
-            <div className="overflow-hidden rounded-xl aspect-video bg-black">
+            <div className="rounded-2xl bg-black/30 p-4">
+              <p className="mb-3 text-sm font-medium text-white/90">Trailer</p>
+
+              <div className="aspect-video overflow-hidden rounded-xl bg-black">
                 <video
                   controls
                   className="h-full w-full object-cover"
                   aria-label={`${item.title} trailer`}
                   poster={item.thumbnail}
+                  onTimeUpdate={handleTimeUpdate}
+                  onEnded={() => onFinishWatching?.(item.id)}
                 >
-                <source src={item.video_url} type="video/mp4" />
-                    Your browser does not support the video tag.
+                  <source src={item.video_url} type="video/mp4" />
+                  Your browser does not support the video tag.
                 </video>
-            </div>
+              </div>
             </div>
           </div>
         </div>

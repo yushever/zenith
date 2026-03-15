@@ -7,10 +7,22 @@ import { ContentRow } from '@/components/content/ContentRow';
 import { ContentSkeleton } from '@/components/content/ContentSkeleton';
 import { ContentModal } from '@/components/content/ContentModal';
 import type { ContentItem } from '@/types/content';
+import { HistorySection } from './HistorySection';
+import { useWatchHistory } from '@/hooks/useWatchHistory';
 
 export const StreamingHome = () => {
   const { trending, loading, error } = useContent();
   const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null);
+
+    const {
+    historyItems,
+    updateProgress,
+    markAsWatched,
+  } = useWatchHistory(trending);
+
+    const handleStartWatching = (contentId: number, progress: number) => {
+    updateProgress(contentId, progress);
+    };
 
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
@@ -29,18 +41,27 @@ export const StreamingHome = () => {
         )}
 
         {!loading && !error && (
+            <>
           <ContentRow
             title="Trending Now"
             items={trending}
             onSelect={setSelectedItem}
           />
+
+        <HistorySection
+              items={historyItems}
+              onSelect={setSelectedItem}
+            />
+            </>
         )}
       </div>
 
         <ContentModal
-            item={selectedItem}
-            isOpen={Boolean(selectedItem)}
-            onClose={() => setSelectedItem(null)}
+        item={selectedItem}
+        isOpen={Boolean(selectedItem)}
+        onClose={() => setSelectedItem(null)}
+        onStartWatching={handleStartWatching}
+        onFinishWatching={markAsWatched}
         />
 
     </main>
