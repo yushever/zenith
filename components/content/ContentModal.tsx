@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 import type { ContentItem } from '@/types/content';
 
 type ContentModalProps = {
@@ -18,6 +19,10 @@ export const ContentModal = ({
   onStartWatching,
   onFinishWatching,
 }: ContentModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(modalRef, isOpen);
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -34,9 +39,9 @@ export const ContentModal = ({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen || !item) return null;
-
   const handleTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>) => {
+    if (!item) return;
+
     const video = event.currentTarget;
 
     if (!video.duration || Number.isNaN(video.duration)) return;
@@ -46,12 +51,15 @@ export const ContentModal = ({
     onStartWatching?.(item.id, progress);
   };
 
+  if (!isOpen || !item) return null;
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
       onClick={onClose}
     >
       <div
+        ref={modalRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="content-modal-title"
@@ -89,7 +97,8 @@ export const ContentModal = ({
               <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
                 <span>{item.year}</span>
                 <span className="rounded-full bg-white/10 px-2 py-1">
-                  ⭐ {item.rating}
+                  <span aria-hidden="true">⭐ </span>
+                  {item.rating}
                 </span>
               </div>
             </div>
