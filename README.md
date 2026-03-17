@@ -11,6 +11,10 @@ The project implements:
 - basic accessibility (ARIA + keyboard navigation)
 - unit tests
 
+## Live Demo
+
+[zenith-one-nu.vercel.app](https://zenith-one-nu.vercel.app)
+
 ## Setup
 
 Install dependencies
